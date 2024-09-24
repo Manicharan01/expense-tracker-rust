@@ -1,9 +1,10 @@
 [package]
 name = "todo"
-version = "0.1.4"
+version = "0.1.6"
 edition = "2021"
 
 [dependencies]
+colored = "2.1.0"
 indicatif = "0.17.8"
 serde = {version = "1.0.210", features = ["derive"]}
 serde_derive = "1.0.210"

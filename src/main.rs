@@ -1,4 +1,5 @@
 mod add;
+mod list;
 use std::env;
 
 fn main() {
@@ -36,5 +37,7 @@ fn main() {
     }
     if arguments[1] == "add" {
         add::add(id, description, date, category, amount);
+    } else if arguments[1] == "listall" {
+        let _ = list::listall();
     }
 }
