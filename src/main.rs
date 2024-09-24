@@ -34,6 +34,7 @@ fn main() {
             amount = arguments[i + 1].clone();
         }
     }
-
-    add::add(id, description, date, category, amount);
+    if arguments[1] == "add" {
+        add::add(id, description, date, category, amount);
+    }
 }
