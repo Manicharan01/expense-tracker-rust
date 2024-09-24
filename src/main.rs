@@ -1,5 +1,6 @@
 mod add;
 mod list;
+mod update;
 use std::env;
 
 fn main() {
@@ -41,5 +42,7 @@ fn main() {
         let _ = list::listall();
     } else if arguments[1] == "list" {
         let _ = list::listone(id);
+    } else if arguments[1] == "update" {
+        let _ = update::update(id, description, date, category, amount);
     }
 }
