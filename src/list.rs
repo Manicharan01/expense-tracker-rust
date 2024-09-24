@@ -40,6 +40,34 @@ pub fn listall() -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
+pub fn listone(id: String) -> Result<(), Box<dyn Error>> {
+    let todos = read_to_string("/home/charan/Downloads/todo.json")?;
+
+    println!(
+        "{}, {}, {}, {}, {}",
+        "Id".bold().red(),
+        "Description".bold().red(),
+        "Amount".bold().red(),
+        "Category".bold().red(),
+        "Date".bold().red()
+    );
+
+    for (_index, (_key, transaction)) in todos.iter().enumerate() {
+        if id == transaction.id {
+            println!(
+                "{}, {}, {}, {}, {}",
+                transaction.id.green(),
+                transaction.description.green(),
+                transaction.amount.green(),
+                transaction.category.green(),
+                transaction.date.green()
+            );
+        }
+    }
+
+    Ok(())
+}
+
 fn read_to_string(path: &str) -> Result<HashMap<String, Todo>, Box<dyn Error>> {
     let file = fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);

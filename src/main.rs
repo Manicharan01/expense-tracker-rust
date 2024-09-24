@@ -39,5 +39,7 @@ fn main() {
         add::add(id, description, date, category, amount);
     } else if arguments[1] == "listall" {
         let _ = list::listall();
+    } else if arguments[1] == "list" {
+        let _ = list::listone(id);
     }
 }
