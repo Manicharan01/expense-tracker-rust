@@ -1,4 +1,5 @@
 mod add;
+mod delete;
 mod list;
 mod update;
 use std::env;
@@ -44,5 +45,7 @@ fn main() {
         let _ = list::listone(id);
     } else if arguments[1] == "update" {
         let _ = update::update(id, description, date, category, amount);
+    } else if arguments[1] == "delete" {
+        let _ = delete::delete();
     }
 }
