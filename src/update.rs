@@ -5,7 +5,7 @@ use std::error::Error;
 use std::fs;
 
 #[derive(Clone, Hash, Deserialize, Serialize, Debug)]
-struct Todo {
+struct Expenses {
     id: String,
     description: String,
     date: String,
@@ -20,9 +20,9 @@ pub fn update(
     category: String,
     amount: String,
 ) -> Result<(), Box<dyn Error>> {
-    let mut todos = read_to_string("/home/charan/Downloads/todo.json")?;
+    let mut expenses = read_to_string("/home/charan/Downloads/expenses.json")?;
 
-    let mut required_todo = Todo {
+    let mut required_expense = Expenses {
         id: String::from(""),
         description: String::from(""),
         date: String::from(""),
@@ -30,9 +30,9 @@ pub fn update(
         amount: String::from(""),
     };
 
-    for (_idx, (_key, transaction)) in todos.iter().enumerate() {
+    for (_idx, (_key, transaction)) in expenses.iter().enumerate() {
         if transaction.id == id {
-            required_todo = transaction.clone();
+            required_expense = transaction.clone();
         }
     }
 
@@ -40,36 +40,36 @@ pub fn update(
         eprintln!("No ID is given");
     } else {
         if description != "" {
-            required_todo.description = description;
+            required_expense.description = description;
         }
         if date != "" {
-            required_todo.date = date;
+            required_expense.date = date;
         }
         if amount != "" {
-            required_todo.amount = amount;
+            required_expense.amount = amount;
         }
         if category != "" {
-            required_todo.category = category;
+            required_expense.category = category;
         }
     }
 
-    todos.insert(id, required_todo);
-    write_to_file(&todos).unwrap();
+    expenses.insert(id, required_expense);
+    write_to_file(&expenses).unwrap();
 
     Ok(())
 }
 
-fn read_to_string(path: &str) -> Result<HashMap<String, Todo>, Box<dyn Error>> {
+fn read_to_string(path: &str) -> Result<HashMap<String, Expenses>, Box<dyn Error>> {
     let file = fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);
 
-    let u: HashMap<String, Todo> = serde_json::from_reader(reader)?;
+    let u: HashMap<String, Expenses> = serde_json::from_reader(reader)?;
 
     Ok(u)
 }
 
-fn write_to_file(todos: &HashMap<String, Todo>) -> Result<(), Box<dyn Error>> {
-    let file = fs::File::create("/home/charan/Downloads/todo.json")?;
-    serde_json::to_writer(file, todos)?;
+fn write_to_file(expenses: &HashMap<String, Expenses>) -> Result<(), Box<dyn Error>> {
+    let file = fs::File::create("/home/charan/Downloads/expenses.json")?;
+    serde_json::to_writer(file, expenses)?;
     Ok(())
 }

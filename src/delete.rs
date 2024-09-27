@@ -6,7 +6,7 @@ use std::fs;
 use std::io::{self, Write};
 
 #[derive(Clone, Hash, Deserialize, Serialize, Debug)]
-struct Todo {
+struct Expenses {
     id: String,
     description: String,
     date: String,
@@ -15,8 +15,8 @@ struct Todo {
 }
 
 pub fn delete() -> Result<(), Box<dyn Error>> {
-    let mut todos = read_to_string("/home/charan/Downloads/todo.json")?;
-    let mut keys: Vec<String> = todos.keys().cloned().collect();
+    let mut expenses = read_to_string("/home/charan/Downloads/expenses.json")?;
+    let mut keys: Vec<String> = expenses.keys().cloned().collect();
     keys.sort_by(|a, b| {
         a.parse::<usize>()
             .unwrap_or(0)
@@ -25,8 +25,8 @@ pub fn delete() -> Result<(), Box<dyn Error>> {
 
     println!("Available transactions:");
     for (i, key) in keys.iter().enumerate() {
-        if let Some(todo) = todos.get(key) {
-            println!("{}: {} - {}", i + 1, key, todo.description);
+        if let Some(expense) = expenses.get(key) {
+            println!("{}: {} - {}", i + 1, key, expense.description);
         }
     }
 
@@ -46,27 +46,27 @@ pub fn delete() -> Result<(), Box<dyn Error>> {
 
     if let Some(key) = keys.get(idx - 1) {
         println!("Removing the entry with {} from list", key);
-        todos.remove(key);
+        expenses.remove(key);
     } else {
         println!("Index out of bounds");
     }
 
-    write_to_file(&todos).unwrap();
+    write_to_file(&expenses).unwrap();
 
     Ok(())
 }
 
-fn read_to_string(path: &str) -> Result<HashMap<String, Todo>, Box<dyn Error>> {
+fn read_to_string(path: &str) -> Result<HashMap<String, Expenses>, Box<dyn Error>> {
     let file = fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);
 
-    let u: HashMap<String, Todo> = serde_json::from_reader(reader)?;
+    let u: HashMap<String, Expenses> = serde_json::from_reader(reader)?;
 
     Ok(u)
 }
 
-fn write_to_file(todos: &HashMap<String, Todo>) -> Result<(), Box<dyn Error>> {
-    let file = fs::File::create("/home/charan/Downloads/todo.json")?;
-    serde_json::to_writer(file, todos)?;
+fn write_to_file(expenses: &HashMap<String, Expenses>) -> Result<(), Box<dyn Error>> {
+    let file = fs::File::create("/home/charan/Downloads/expenses.json")?;
+    serde_json::to_writer(file, expenses)?;
     Ok(())
 }

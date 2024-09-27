@@ -38,6 +38,17 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a357d28ed41a50f9c765dbfe56cbc04a64e53e5fc58ba79fbc34c10ef3df831f"
 
 [[package]]
+name = "expense-track"
+version = "0.2.0"
+dependencies = [
+ "colored",
+ "indicatif",
+ "serde",
+ "serde_derive",
+ "serde_json",
+]
+
+[[package]]
 name = "indicatif"
 version = "0.17.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -160,17 +171,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "unicode-ident",
-]
-
-[[package]]
-name = "todo"
-version = "0.1.8"
-dependencies = [
- "colored",
- "indicatif",
- "serde",
- "serde_derive",
- "serde_json",
 ]
 
 [[package]]

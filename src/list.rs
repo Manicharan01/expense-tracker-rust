@@ -6,7 +6,7 @@ use std::error::Error;
 use std::fs;
 
 #[derive(Hash, Deserialize, Serialize, Debug)]
-struct Todo {
+struct Expenses {
     id: String,
     description: String,
     date: String,
@@ -15,7 +15,7 @@ struct Todo {
 }
 
 pub fn listall() -> Result<(), Box<dyn Error>> {
-    let todos = read_to_string("/home/charan/Downloads/todo.json")?;
+    let expenses = read_to_string("/home/charan/Downloads/expenses.json")?;
 
     println!(
         "{}, {}, {}, {}, {}",
@@ -26,7 +26,7 @@ pub fn listall() -> Result<(), Box<dyn Error>> {
         "Date".bold().red()
     );
 
-    for (_index, (_key, transaction)) in todos.iter().enumerate() {
+    for (_index, (_key, transaction)) in expenses.iter().enumerate() {
         println!(
             "{}, {}, {}, {}, {}",
             transaction.id.green(),
@@ -41,7 +41,7 @@ pub fn listall() -> Result<(), Box<dyn Error>> {
 }
 
 pub fn listone(id: String) -> Result<(), Box<dyn Error>> {
-    let todos = read_to_string("/home/charan/Downloads/todo.json")?;
+    let expenses = read_to_string("/home/charan/Downloads/expenses.json")?;
 
     println!(
         "{}, {}, {}, {}, {}",
@@ -52,7 +52,7 @@ pub fn listone(id: String) -> Result<(), Box<dyn Error>> {
         "Date".bold().red()
     );
 
-    for (_index, (_key, transaction)) in todos.iter().enumerate() {
+    for (_index, (_key, transaction)) in expenses.iter().enumerate() {
         if id == transaction.id {
             println!(
                 "{}, {}, {}, {}, {}",
@@ -68,11 +68,11 @@ pub fn listone(id: String) -> Result<(), Box<dyn Error>> {
     Ok(())
 }
 
-fn read_to_string(path: &str) -> Result<HashMap<String, Todo>, Box<dyn Error>> {
+fn read_to_string(path: &str) -> Result<HashMap<String, Expenses>, Box<dyn Error>> {
     let file = fs::File::open(path)?;
     let reader = std::io::BufReader::new(file);
 
-    let u: HashMap<String, Todo> = serde_json::from_reader(reader)?;
+    let u: HashMap<String, Expenses> = serde_json::from_reader(reader)?;
 
     Ok(u)
 }
